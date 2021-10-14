@@ -1,0 +1,45 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('train.csv')
+# print(df.head())
+trian=df[0:10392]
+test=df[10392:]
+df["Timestamp"]=pd.to_datetime(df["Datetime"],format="%d-%m-%Y %H:%M")
+
+df.index=df["Timestamp"]
+# print(df.head())
+df=df.resample("D").mean()
+# print(df.head())
+
+trian["Timestamp"]=pd.to_datetime(trian["Datetime"],format="%d-%m-%Y %H:%M")
+
+trian.index=trian["Timestamp"]
+print(trian.head())
+trian=trian.resample("D").mean()
+print(trian.head())
+
+test['Timestamp'] = pd.to_datetime(test['Datetime'], format='%d-%m-%Y %H:%M')
+test.index = test['Timestamp']
+print(test.head())
+test = test.resample('D').mean()
+print(test.head())
+
+trian.Count.plot(figsize=(15,8), title= 'Daily Ridership', fontsize=14)
+test.Count.plot(figsize=(15,8), title= 'Daily Ridership', fontsize=14)
+plt.show()
+
+#朴素法预测
+#如果数据集在一段时间内都很稳定，我们想预测第二天的价格，
+# 可以取前面一天的价格，预测第二天的值。
+# 这种假设第一个预测点和上一个观察点相等的预测方法就叫朴素法
+
+
+
+
+
+
+
+
+
